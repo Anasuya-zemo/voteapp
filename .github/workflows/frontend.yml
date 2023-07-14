@@ -1,4 +1,4 @@
-name: CI/CD for the frontend into EKS cluster
+name: CI/CD for the voteapp-frontend into EKS cluster
 
 on:
   push:
