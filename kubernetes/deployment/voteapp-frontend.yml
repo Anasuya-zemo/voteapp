@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deploy
+  namespace: cloudacademy
+  labels:
+    role: frontend
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      role: frontend
+  template:
+    metadata:
+      labels:
+        role: frontend
+    spec:
+      containers:
+      - name: frontend-image
+        image: ghcr.io/anasuya-zemo/voteapp-frontend-react:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 2
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+             path: /
+             port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+      imagePullSecrets: 
+      - name: ghcr-secret
