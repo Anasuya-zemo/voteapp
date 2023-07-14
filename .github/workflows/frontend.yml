@@ -3,7 +3,7 @@ name: CI/CD for the frontend into EKS cluster
 on:
   push:
     branches:
-      - deployment
+      - master
     paths:
       - voteapp-frontend-react/**
       - .github/workflows/frontend.yml
