@@ -15,7 +15,7 @@ jobs:
 
      defaults:
        run:
-         working-directory: frontend
+         working-directory: voteapp-frontend-react
 
      steps:
       - name: Checkout Repository
@@ -25,9 +25,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: frontend/node_modules
-          key: ${{ runner.os }}-npmNode-${{ hashFiles('**/package.json') }}
+          key: ${{ runner.os }}-npmcache-${{ hashFiles('**/package.json') }}
           restore-keys: |
-            ${{ runner.os }}-npmNode-
+            ${{ runner.os }}-npmcache-
 
       - name: install dependencies
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
@@ -46,7 +46,7 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v2
         with:
-          context: ./frontend
+          context: ./voteapp-frontend-react
           push: true
           tags: ghcr.io/${{ secrets.DOCKERUSER }}/voteapp-frontend-react:${{ github.run_number }}
 
