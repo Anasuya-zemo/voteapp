@@ -47,9 +47,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./voteapp-frontend-react
-          file: ./voteapp-frontend-react/Dockerfile
           push: true
           tags: ghcr.io/${{ secrets.DOCKERUSER }}/voteapp-frontend-react:${{ github.run_number }}
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:

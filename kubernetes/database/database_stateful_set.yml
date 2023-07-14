@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+  namespace: cloudacademy
+spec:
+  selector:
+    matchLabels:
+      role: db
+      replicaset: rs0.main
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        role: db
+        replicaset: rs0.main
+    spec:
+      containers:
+        - name: mongo
+          image: mongo
+          command:
+            - "numactl"
+            - "--interleave=all"
+            - "mongod"
+            - "--wiredTigerCacheSizeGB"
+            - "0.1"
+            - "--bind_ip"
+            - "0.0.0.0"
+            - "--replSet"
+            - "rs0"
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongodb-persistent-storage-claim
+              mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: mongodb-persistent-storage-claim
+      namespace: cloudacademy
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 3G
