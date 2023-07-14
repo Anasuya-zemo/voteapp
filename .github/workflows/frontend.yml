@@ -48,7 +48,7 @@ jobs:
         with:
           context: ./voteapp-frontend-react
           push: true
-          tags: ghcr.io/anasuya-zemo/voteapp-frontend:${{ github.run_number }}
+          tags: ghcr.io/anasuya-zemo/voteapp-frontend-react:${{ github.run_number }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
