@@ -33,7 +33,7 @@ jobs:
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: npm install --legacy-peer-deps
 
-      - name: run build
+      - name: run build - react
         run: npm run build
       
       - name: Login to GitHub Container Registry
