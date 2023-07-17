@@ -4,41 +4,51 @@ metadata:
   name: mongo
   namespace: cloudacademy
 spec:
+  serviceName: mongo
+  replicas: 3
   selector:
     matchLabels:
       role: db
-      replicaset: rs0.main
-  replicas: 3
   template:
     metadata:
       labels:
         role: db
-        replicaset: rs0.main
     spec:
       containers:
         - name: mongo
           image: mongo
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: admin
+
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: password
           command:
             - "numactl"
             - "--interleave=all"
             - "mongod"
             - "--wiredTigerCacheSizeGB"
-            - "0.1"
+            - "0.25"
             - "--bind_ip"
             - "0.0.0.0"
             - "--replSet"
             - "rs0"
+
           ports:
             - containerPort: 27017
+
           volumeMounts:
             - name: mongodb-persistent-storage-claim
               mountPath: /data/db
+
   volumeClaimTemplates:
-  - metadata:
-      name: mongodb-persistent-storage-claim
-      namespace: cloudacademy
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 3G
+    - metadata:
+        name: mongodb-persistent-storage-claim
+        namespace: cloudacademy
+        annotations:
+          volume.beta.kubernetes.io/storage-class: "gp2"
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
