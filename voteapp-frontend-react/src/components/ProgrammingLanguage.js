@@ -17,13 +17,13 @@ class ProgrammingLanguage extends Component {
 
   componentDidMount () {
     //provide implementation to request language details for current language from the API server
-    axios.get(`http://${this.APIHOSTPORT}/languages/${this.props.id}`).then(
+    axios.get(`https://${this.APIHOSTPORT}/languages/${this.props.id}`).then(
       response => this.setState({
         language: response.data,
         loaded: true
       })
     );
-    console.log(`http://${this.APIHOSTPORT}/languages/${this.props.id}`);
+    // console.log(`http://${this.APIHOSTPORT}/languages/${this.props.id}`);
   }
 
   render () {
