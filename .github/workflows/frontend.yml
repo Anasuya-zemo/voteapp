@@ -64,7 +64,7 @@ jobs:
         env:
           imageTag: ghcr.io/${{ secrets.DOCKERUSER }}/voteapp-frontend-react:${{ github.run_number }}
         run: |
-         kubectl set image deployment/frontend-deploy frontend-image=$imageTag
+         kubectl set image deployment/frontend-deploy frontend-image=$imageTag -n cloudacademy
          
 
       

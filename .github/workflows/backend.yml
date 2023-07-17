@@ -55,7 +55,7 @@ jobs:
         env:
           imageTag: ghcr.io/${{ secrets.DOCKERUSER }}/voteapp-api:${{ github.run_number }}
         run: |
-         kubectl set image deployment/api api=$imageTag
+         kubectl set image deployment/api api=$imageTag -n cloudacademy
          
 
       
