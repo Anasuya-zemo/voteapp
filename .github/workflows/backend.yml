@@ -20,12 +20,6 @@ jobs:
      steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-
-      - name: install dependencies
-        run: go mod download
-
-      - name: run build
-        run: go build -o api
       
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
